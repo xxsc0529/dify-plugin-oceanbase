@@ -1,0 +1,37 @@
+version: 0.0.1
+type: plugin
+author: oceanbase
+name: oceanbase
+label:
+  en_US: OceanBase
+  zh_Hans: OceanBase
+description:
+  en_US: "OceanBase database query tool."
+  zh_Hans: "OceanBase 数据库查询工具。"
+icon: "icon.png"
+tags:
+  - search
+  - utilities
+resource:
+  memory: 268435456
+  permission:
+    model:
+      enabled: true
+      llm: true
+      text_embedding: true
+plugins:
+  tools:
+    - provider/oceanbase.yaml
+meta:
+  version: 0.0.1
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+created_at: 2025-09-18T20:54:43.83542+08:00
+privacy: PRIVACY.md
+repo: https://github.com/oceanbase/dify-plugin-oceanbase
+verified: false

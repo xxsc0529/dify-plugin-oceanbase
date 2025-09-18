@@ -1,0 +1,67 @@
+identity:
+  author: "oceanbase"
+  name: "oceanbase"
+  label:
+    en_US: "OceanBase"
+    zh_Hans: "OceanBase"
+  description:
+    en_US: "OceanBase database query tool."
+    zh_Hans: "OceanBase 数据库查询工具。"
+  icon: "icon.png"
+  tags:
+    - search
+    - utilities
+tools:
+  - tools/execute_sql.yaml
+  - tools/get_table_schema.yaml
+  - tools/text2sql.yaml
+extra:
+  python:
+    source: provider/oceanbase.py
+
+credentials_for_provider:
+  hostname:
+    type: text-input
+    required: true
+    label:
+      en_US: The address of database
+      zh_Hans: 数据库地址
+    placeholder:
+      en_US: Please enter the address of database, such as IP address or domain name
+      zh_Hans: 请输入数据库的地址，如 IP 地址或域名
+  port:
+    type: text-input
+    required: true
+    label:
+      en_US: The port number of database
+      zh_Hans: 端口
+    placeholder:
+      en_US: Please enter the port number of database
+      zh_Hans: 请输入端口号
+  db_name:
+    type: text-input
+    required: true
+    label:
+      en_US: The database name
+      zh_Hans: 数据库名称
+    placeholder:
+      en_US: Please enter the database name
+      zh_Hans: 请输入数据库名称
+  username:
+    type: text-input
+    required: true
+    label:
+      en_US: The username
+      zh_Hans: 用户名
+    placeholder:
+      en_US: Please enter the username
+      zh_Hans: 请输入用户名
+  password:
+    type: secret-input
+    required: false
+    label:
+      en_US: The password
+      zh_Hans: 密码
+    placeholder:
+      en_US: Please enter the password
+      zh_Hans: 请输入密码

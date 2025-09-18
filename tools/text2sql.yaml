@@ -1,0 +1,62 @@
+identity:
+  name: text2sql
+  author: oceanbase
+  label:
+    en_US: Text to SQL
+    zh_Hans: 文本转 SQL
+description:
+  human:
+    en_US: Use LLM to convert the user query text into SQL based on the database context.
+    zh_Hans: 基于数据库上下文，使用 LLM 将用户的查询文本转为 SQL。
+  llm: This tool is used to convert the user query text into SQL based on database context.
+parameters:
+  - name: query
+    type: string
+    required: true
+    label:
+      en_US: Query conditions
+      zh_Hans: 查询条件
+    human_description:
+      en_US: Query conditions described in natural language.
+      zh_Hans: 自然语言描述的查询条件。
+    llm_description: Query conditions described in natural language.
+    form: llm
+  - name: tables
+    type: string
+    required: false
+    label:
+      en_US: Tables
+      zh_Hans: 指定数据表
+    human_description:
+      en_US: Specify which tables to provide to LLM as context. If not specified, all tables will be used. Multi tables use comma to separate.
+      zh_Hans: 指定哪些表用于提供给 LLM 作为上下文，如不指定，则使用所有表。多张表用半角逗号隔开。
+    llm_description: Specify which tables schema do you want to get as model context. Multi tables use comma to separate. Leave it blank if you want to get all tables schema.
+    form: llm
+  - name: config_options
+    type: string
+    required: false
+    form: form
+    label:
+      en_US: DB Config Options
+      zh_Hans: 数据库连接配置选项
+    human_description:
+      en_US: |
+        Optional. For example {"connect_args": {"ssl": {"ca": "/path/to/ca.pem"}}}
+        More connection options can be found at https://docs.sqlalchemy.org/en/20/core/engines.html#sqlalchemy.create_engine
+      zh_Hans: |
+        选填项。例如 {"connect_args": {"ssl": {"ca": "/path/to/ca.pem"}}}
+        更多连接选项可参考 https://docs.sqlalchemy.org/en/20/core/engines.html#sqlalchemy.create_engine\
+  - name: model
+    type: model-selector
+    scope: llm
+    required: true
+    label:
+      en_US: Model
+      zh_Hans: 模型
+    human_description:
+      en_US: Choose LLM.
+      zh_Hans: 选择大语言模型。
+    form: form
+extra:
+  python:
+    source: tools/text2sql.py
