@@ -68,6 +68,29 @@ parameters:
       zh_Hans: 用于重新排序结果的重排模型。指定多个表名时必需。
     llm_description: The rerank model to use for re-ranking results. Required when multiple table names are specified; optional when a single table is specified.
     form: form
+  - name: filter
+    type: string
+    required: false
+    label:
+      en_US: Filter Conditions
+      zh_Hans: 过滤条件
+    human_description:
+      en_US: |
+        Optional. Additional filtering conditions in Elasticsearch-compatible JSON format.
+        Examples:
+        - Range filter: {"range": {"price": {"gte": 10, "lte": 100}}}
+        - Term filter: {"term": {"category": "electronics"}}
+        - Multiple filters: {"bool": {"must": [{"term": {"status": "active"}}, {"range": {"date": {"gte": "2024-01-01"}}}]}}
+        More filter options: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
+      zh_Hans: |
+        选填项。Elasticsearch 兼容的 JSON 格式的额外过滤条件。
+        示例：
+        - 范围过滤: {"range": {"price": {"gte": 10, "lte": 100}}}
+        - 精确匹配: {"term": {"category": "electronics"}}
+        - 多条件: {"bool": {"must": [{"term": {"status": "active"}}, {"range": {"date": {"gte": "2024-01-01"}}}]}}
+        更多过滤选项: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
+    llm_description: Additional filtering conditions in Elasticsearch-compatible JSON format. Use this to filter results by specific field values, ranges, or complex boolean conditions. Leave empty if no additional filtering is needed.
+    form: llm
   - name: format
     type: select
     required: false

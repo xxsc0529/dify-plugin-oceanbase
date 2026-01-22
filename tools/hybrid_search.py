@@ -17,6 +17,7 @@ class HybridSearchTool(Tool):
         top_k = tool_parameters.get("top_k", 10)
         embedding_model_config = tool_parameters.get("embedding_model")
         rerank_model_config = tool_parameters.get("rerank_model")
+        filter_param = tool_parameters.get("filter", "").strip()
         config_options = tool_parameters.get("config_options") or "{}"
 
         # Validate required parameters
@@ -31,6 +32,14 @@ class HybridSearchTool(Tool):
             config_options = json.loads(config_options)
         except json.JSONDecodeError:
             raise ValueError("Invalid JSON format for Connect Config")
+
+        # Parse filter parameter if provided
+        filter_dict = None
+        if filter_param:
+            try:
+                filter_dict = json.loads(filter_param)
+            except json.JSONDecodeError:
+                raise ValueError("Invalid JSON format for filter parameter")
 
         # Parse table names
         tables = [t.strip() for t in table_names.split(",")]
@@ -52,7 +61,7 @@ class HybridSearchTool(Tool):
 
         # Step 3: Perform hybrid search using pyobvector's HybridSearch
         search_results = self._perform_hybrid_search(
-            ob_config, config_options, tables, query, embedded_query, top_k, table_info
+            ob_config, config_options, tables, query, embedded_query, top_k, table_info, filter_dict
         )
 
         # Step 4: If rerank model is set, re-rank the results
@@ -124,7 +133,8 @@ class HybridSearchTool(Tool):
         query: str,
         embedded_query: list[float],
         top_k: int,
-        table_info: dict[str, dict[str, Any]]
+        table_info: dict[str, dict[str, Any]],
+        filter_dict: dict[str, Any] | None = None
     ) -> list[dict[str, Any]]:
         """Perform hybrid search using pyobvector's HybridSearch class."""
         # Initialize HybridSearch client
@@ -188,6 +198,13 @@ class HybridSearchTool(Tool):
                 },
                 "size": top_k
             }
+            
+            # Add filter if provided (Elasticsearch-style filter for additional conditions)
+            if filter_dict:
+                search_body["query"]["bool"] = {
+                    "must": search_body["query"].pop("hybrid"),
+                    "filter": filter_dict
+                }
             
             try:
                 # Execute hybrid search
