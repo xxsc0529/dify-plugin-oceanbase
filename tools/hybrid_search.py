@@ -201,8 +201,9 @@ class HybridSearchTool(Tool):
             
             # Add filter if provided (Elasticsearch-style filter for additional conditions)
             if filter_dict:
+                hybrid_query = search_body["query"].pop("hybrid")
                 search_body["query"]["bool"] = {
-                    "must": search_body["query"].pop("hybrid"),
+                    "must": [{"hybrid": hybrid_query}],
                     "filter": filter_dict
                 }
             
