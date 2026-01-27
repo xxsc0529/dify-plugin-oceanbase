@@ -32,6 +32,19 @@ This plugin is used to query OceanBase databases and includes multiple tools to 
 - **Intelligence**: Generate accurate SQL based on database context and table structure information
 - **Model Selection**: Support selecting different large language models for conversion
 
+#### 4. Hybrid Search
+
+- **Function**: Execute hybrid search combining vector similarity and full-text search on OceanBase or SeekDB tables
+- **Requirements**: Supported on OceanBase 4.4.1+ and SeekDB. Tables must have vector indexes or full-text indexes.
+- **Table Type Support**: 
+  - Heap tables: Fully supported with primary key for hybrid search
+  - Primary key tables : Not supported for hybrid search
+- **Features**:
+  - Combines vector similarity search with full-text search for more accurate results
+  - Supports searching across multiple tables
+  - Uses embedding models to convert query text to vectors
+- **Use Cases**: Semantic search, document retrieval, question answering systems
+
 ### Usage Instructions
 
 1. **Database Connection**: Configure OceanBase database connection information
@@ -44,6 +57,7 @@ This plugin is used to query OceanBase databases and includes multiple tools to 
 - This plugin only supports query operations and does not support data modification
 - It is recommended to use read-only database accounts to ensure security
 - Supports multiple output formats that can be selected as needed
+- Hybrid Search requires OceanBase 4.4.1+ or SeekDB, and tables must have appropriate indexes
 
 ### References
 
